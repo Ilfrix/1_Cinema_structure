@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 
+//support structure
 struct Date
 {
     int day, month, year;
@@ -26,8 +27,7 @@ bool operator == (Date d1, Date d2)
 {
     return (d1.day == d2.day && d1.month == d2.month && d1.year == d2.year);
 }
-
-
+//support strucrute
 struct Time
 {
     int minute, hour;
@@ -45,7 +45,7 @@ std::ostream& operator << (std::ostream &os, const Time &t)
     return os << t.hour << ' '  << t.minute;
 }
 
-
+//base structure
 struct Cinema
 {
     std::string cinema_name;
@@ -69,6 +69,7 @@ struct Cinema
         this->time_of_start = time_of_start;
         this->cost = cost;
     }
+    //create new note
     Cinema create_film(){
         std::string cinema_name, film_name;
         float cost;
@@ -85,24 +86,26 @@ struct Cinema
         std::cin >> cost;
         return Cinema(cinema_name, film_name, Date(day, month, year), Time(hour, minute), cost);
     }
-    void show_info(){
+    //show info about object
+    void show_info(){ 
         std::cout << "Name of cinema: " << cinema_name << "\nName of film: " << film_name;
         std::cout << "\nDate is: " << date_film << "\nTime is: " << time_of_start;
         std::cout << "\nCost of film is: " << cost << '\n';
     }
 };
-
+//structure for keeping note, using static array
 struct City_cinema
 {
     int current_len;
     int max_len;
     Cinema lst_cinema[100];
+
     City_cinema(){
         this->current_len = 0;
         this->max_len = 100;
     }
-
-    void insert(Cinema c){
+    //insert cinema object before first entry in array
+    void insert(Cinema c){ 
         int tmp;
         for (int i = 0; i < current_len; ++i){
             if (c.cinema_name == lst_cinema[i].cinema_name){
@@ -118,7 +121,8 @@ struct City_cinema
             throw "Index out of range";
         }
     }
-    void delete_cinema(Date d){
+    //delete all note with that date
+    void delete_cinema(Date d){ 
         int k = 0, j = 0;
         for (int i = 0; i < current_len; ++i){
             if (lst_cinema[i].date_film == d){
@@ -130,15 +134,15 @@ struct City_cinema
         for (int p = k; p <= j; ++p) lst_cinema[p] = lst_cinema[p + 1];
         current_len -= (j - k);
     }
-
-    void find_cinema(std::string name_film){
+    //output all note with that name
+    void find_cinema(std::string name_film){ 
         for (int i = 0; i < current_len; ++i){
             if (lst_cinema[i].film_name == name_film)   std::cout << lst_cinema[i].cinema_name << ' ';
         }
     }
         
 };
-
+//structure for keeping note, dinamic array
 struct City_cinema_d
 {
     int cur_len;
@@ -150,7 +154,8 @@ struct City_cinema_d
         this->max_len = 100;
         this->lst_cinema = new Cinema[100];
     }
-    void insert(Cinema c){
+    //insert cinema object before first entry in array
+    void insert(Cinema c){ 
         int tmp;
         if (cur_len == max_len){
             Cinema *new_cinema = new Cinema[max_len*2];
@@ -171,7 +176,8 @@ struct City_cinema_d
         ++cur_len;
         
     }
-    void delete_cinema(Date d){
+    //delete all note with that date
+    void delete_cinema(Date d){ 
         int k = 0, j = 0;
         for (int i = 0; i < cur_len; ++i){
             if (lst_cinema[i].date_film == d){
@@ -183,8 +189,8 @@ struct City_cinema_d
         for (int p = k; p <= j; ++p) lst_cinema[p] = lst_cinema[p + 1];
         cur_len -= (j - k);
     }
-
-    void find_cinema(std::string name_film){
+    //output all note with that name of film
+    void find_cinema(std::string name_film){    
         for (int i = 0; i < cur_len; ++i){
             if (lst_cinema[i].film_name == name_film)   std::cout << lst_cinema[i].cinema_name << ' ';
         }
@@ -197,22 +203,26 @@ bool equel_name_film(Cinema a, Cinema b){
 bool equel_date(Cinema a, Cinema b){
     return a.date_film == b.date_film;
 }
+//structure for keeping note, using vector
 struct City_cinema_vector
 {
     std::vector <Cinema> cinema_city;
-    void insert(Cinema c){
+    //insert cinema object before first entry in array
+    void insert(Cinema c){  
         auto it = lower_bound(cinema_city.begin(), cinema_city.end(), c, equel_name_film);
         cinema_city.insert(it, c);
-        //std::cout << "work\n";
     }
-
-    void delete_cinema(Date d){
+    //delete all note with that date
+    void delete_cinema(Date d){ 
         Cinema c;
         c.date_film = d;
         auto it = lower_bound(cinema_city.begin(), cinema_city.end(), c, equel_date);
-        
+        while (it != cinema_city.end()){
+            cinema_city.erase(it);
+            it = lower_bound(cinema_city.begin(), cinema_city.end(), c, equel_date);
+        }  
     }
-
+    //show all note with that cinema name
     void show_cinema_name(std::string s){
         for (auto a: cinema_city){
             if (a.film_name == s){
@@ -220,12 +230,10 @@ struct City_cinema_vector
             }
         }
     }
-    void show(){
-        //support method
+    //support method, show all note in vector
+    void show(){    
         for (auto a : cinema_city){
             a.show_info();
         }
     }
 };
-
-
