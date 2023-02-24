@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <algorithm>
 
 //support structure
@@ -70,7 +71,7 @@ struct Cinema
         this->cost = cost;
     }
     //create new note
-    Cinema create_film(){
+    void create_film(){
         std::string cinema_name, film_name;
         float cost;
         int day, month, year, minute, hour;
@@ -80,11 +81,11 @@ struct Cinema
         std::cin >> film_name;
         std::cout << "Input date(format day month year): ";
         std::cin >> day >> month >> year;
-        std::cout << "Input time(format hour Minute): ";
+        std::cout << "Input time(format hour minute): ";
         std::cin >> hour >> minute;
         std::cout << "Input cost of film: ";
         std::cin >> cost;
-        return Cinema(cinema_name, film_name, Date(day, month, year), Time(hour, minute), cost);
+        Cinema(cinema_name, film_name, Date(day, month, year), Time(hour, minute), cost);
     }
     //show info about object
     void show_info(){ 
@@ -107,16 +108,15 @@ struct City_cinema
     }
     //insert cinema object before first entry in array
     void insert(Cinema c){ 
-        int tmp;
+        int tmp = current_len;
         for (int i = 0; i <= current_len; ++i){
             if (c.cinema_name == lst_cinema[i].cinema_name){
                 tmp = i;
                 break;
             }
         }
-        std::cout << tmp << '\n';
         if (tmp < max_len){
-            for (int i = current_len; i >= tmp; --i)    lst_cinema[i] = lst_cinema[i - 1];  //отдебагать
+            for (int i = current_len; i > tmp; --i)    lst_cinema[i] = lst_cinema[i - 1];
             lst_cinema[tmp] = c;
             ++current_len;
         }   else{
@@ -124,26 +124,55 @@ struct City_cinema
         }
     }
     //delete all note with that date
-    void delete_cinema(Date d){ 
-        int k = 0, j = 0;
+    void delete_cinema(Date d){ //unwork function
+        /*
+        int j = 0, val_d = 0, m_val_d = 100;
+        int v_del[m_val_d];
         for (int i = 0; i < current_len; ++i){
             if (lst_cinema[i].date_film == d){
-                k = (k == 0) ? i : k;
-                j = i;
+                v_del[val_d++] = i;
             }
         }
-        --j;
-        for (int p = k; p <= j; ++p) lst_cinema[p] = lst_cinema[p + 1];
-        current_len -= (j - k);
+        for (int i = 0; i < current_len - j; ++i){ // =?
+            if (i == v_del[j]){
+                ++j;
+            }
+            lst_cinema[i] = lst_cinema[i + j];
+        }
+        */
+        //current_len -= j;
+        int i = 0, j = 0;
+        while (i + j < current_len){
+            while (i + j < current_len && lst_cinema[i + j].date_film == d)
+                ++j;
+            lst_cinema[i] = lst_cinema[i + j];
+            ++i;
+        }
+        current_len -= j;
+        //for (int p = k; p <= j; ++p) lst_cinema[p] = lst_cinema[p + 1];
+        //current_len -= (j - k + 1);
     }
     //output all note with that name
     void find_cinema(std::string name_film){ 
         for (int i = 0; i < current_len; ++i){
-            if (lst_cinema[i].film_name == name_film)   std::cout << lst_cinema[i].cinema_name << ' ';
+            if (lst_cinema[i].film_name == name_film)   std::cout << lst_cinema[i].cinema_name << '\n';
         }
     }
     void show_all(){
         for (int i = 0; i < this->current_len; ++i) lst_cinema[i].show_info();
+    }
+
+    void input_from_file(){
+        std::ifstream fin("input.txt");
+        std::string cinema_name, film_name;
+        Cinema c;
+        float cost;
+        int day, month, year, minute, hour;
+        while (!fin.eof()){
+            fin >> cinema_name >> film_name >> day >> month >> year >> hour >> minute >> cost;
+            c = Cinema(cinema_name, film_name, Date(day, month, year), Time(hour, minute), cost);
+            insert(c);
+        }
     }
         
 };

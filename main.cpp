@@ -1,28 +1,23 @@
 #include "cinema.h"
 
 int main(){
-    /*
-    Cinema c;
-    c = c.create_film();
-    c.show_info();
-    City_cinema test;
-    test.insert(c);
-    test.find_cinema("Avatar");
-    */
     Cinema c;
     City_cinema all_cinema;
+    int i = 0;
     while (true){
         int choice;
+        std::cout << "iteration " << i++ << '\n';
         std::cout << "Enter number of your choice:\n";
         std::cout << "1 - Enter one movie poster by keyboard\n";
         std::cout << "2 - Insert poster in table\n";
         std::cout << "3 - Delete all posters with date\n";
         std::cout << "4 - Show posters with film\n";
         std::cout << "5 - Show all movie posters in table(support)\n";
+        std::cout << "6 - Enter data from input.txt in table(support)\n";
         std::cout << "0 - Finish program\n";
         std::cin >> choice;
         if (choice == 1){
-            c = c.create_film();
+            c.create_film();
         }
         else if (choice == 2){
             all_cinema.insert(c);
@@ -44,13 +39,12 @@ int main(){
         else if (choice == 5){
             all_cinema.show_all();
         }
+        else if (choice == 6){
+            all_cinema.input_from_file();
+        }
         else if (choice == 0){
             break;
         }
-        
-        City_cinema_vector tmp;
-        tmp.insert(c);
-        tmp.show();
     }
     return 0;
 }
