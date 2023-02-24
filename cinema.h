@@ -88,6 +88,7 @@ struct Cinema
     }
     //show info about object
     void show_info(){ 
+        if (cinema_name == "") return;
         std::cout << "Name of cinema: " << cinema_name << "\nName of film: " << film_name;
         std::cout << "\nDate is: " << date_film << "\nTime is: " << time_of_start;
         std::cout << "\nCost of film is: " << cost << '\n';
@@ -107,14 +108,15 @@ struct City_cinema
     //insert cinema object before first entry in array
     void insert(Cinema c){ 
         int tmp;
-        for (int i = 0; i < current_len; ++i){
+        for (int i = 0; i <= current_len; ++i){
             if (c.cinema_name == lst_cinema[i].cinema_name){
                 tmp = i;
                 break;
             }
         }
+        std::cout << tmp << '\n';
         if (tmp < max_len){
-            for (int i = current_len; i >= tmp; --i)    lst_cinema[i] = lst_cinema[i - 1];
+            for (int i = current_len; i >= tmp; --i)    lst_cinema[i] = lst_cinema[i - 1];  //отдебагать
             lst_cinema[tmp] = c;
             ++current_len;
         }   else{
@@ -139,6 +141,9 @@ struct City_cinema
         for (int i = 0; i < current_len; ++i){
             if (lst_cinema[i].film_name == name_film)   std::cout << lst_cinema[i].cinema_name << ' ';
         }
+    }
+    void show_all(){
+        for (int i = 0; i < this->current_len; ++i) lst_cinema[i].show_info();
     }
         
 };
