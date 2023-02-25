@@ -8,7 +8,6 @@ int main(){
     int i = 0;
     while (true){
         int choice;
-        std::cout << "iteration " << i++ << '\n';
         std::cout << "Enter number of your choice:\n";
         std::cout << "1 - Enter one movie poster by keyboard\n";
         std::cout << "2 - Insert poster in table\n";

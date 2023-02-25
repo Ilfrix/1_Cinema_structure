@@ -262,11 +262,12 @@ struct City_cinema_vector
     void delete_cinema(Date d){ 
         Cinema c;
         c.date_film = d;
-        auto it = cinema_city.begin();
-        for (int i = 0; it!=cinema_city.end();++i, ++it){
-            std::cout << i << '\n';
+        auto it = cinema_city.end() - 1;
+        for (int i = cinema_city.size() - 1; it!=cinema_city.begin() - 1;--i, --it){
+            std::cout << cinema_city[i].date_film << '\n';
             if (cinema_city[i].date_film == d){
                 cinema_city.erase(it);
+                //--it;
             }
             //else ++i;
         }  
