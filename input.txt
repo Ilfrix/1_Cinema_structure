@@ -3,5 +3,6 @@ Not_best_cinema Cars2 23 10 2022 9 00 400
 Something Avatar 8 10 2023 10 30 800
 Karo One_home 12 02 2023 10 30 600
 Qwerty Qazwsx 12 02 2023 15 50 1000
-Abcdf Avatar 17 05 2020 8 00 600
-What? One_home 23 10 2022 10 30 500
+Abcdf Avatar 17 05 2020 8 10 600
+What One_home 23 10 2022 10 30 500
+Best_cinema Pirats 14 4 2023 11 50 1000

@@ -2,7 +2,9 @@
 
 int main(){
     Cinema c;
-    City_cinema all_cinema;
+    //City_cinema all_cinema;
+    //City_cinema_d all_cinema;
+    City_cinema_vector all_cinema;
     int i = 0;
     while (true){
         int choice;
@@ -17,11 +19,10 @@ int main(){
         std::cout << "0 - Finish program\n";
         std::cin >> choice;
         if (choice == 1){
-            c.create_film();
+            c = c.create_film();
         }
         else if (choice == 2){
             all_cinema.insert(c);
-            std::cout << "End of word 2\n";
         }
         else if (choice == 3){
             Date d;
@@ -40,7 +41,8 @@ int main(){
             all_cinema.show_all();
         }
         else if (choice == 6){
-            all_cinema.input_from_file();
+            std::string file_name = "input.txt";
+            all_cinema.input_from_file(file_name);
         }
         else if (choice == 0){
             break;
