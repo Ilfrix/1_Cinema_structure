@@ -191,6 +191,7 @@ struct City_cinema_d
                 new_cinema[i] = lst_cinema[i];
             }
             lst_cinema = new_cinema;
+            delete [] new_cinema;
         }
         for (int i = 0; i < cur_len; ++i){
             if (c.cinema_name == lst_cinema[i].cinema_name){
@@ -238,6 +239,9 @@ struct City_cinema_d
             insert(c);
         }
     }
+    ~City_cinema_d(){
+        delete[] lst_cinema;
+    }
 };
 bool equel_name_film(Cinema a, Cinema b){
     return a.cinema_name == b.cinema_name;
@@ -267,9 +271,7 @@ struct City_cinema_vector
             std::cout << cinema_city[i].date_film << '\n';
             if (cinema_city[i].date_film == d){
                 cinema_city.erase(it);
-                //--it;
             }
-            //else ++i;
         }  
     }
     //show all note with that cinema name
