@@ -148,12 +148,13 @@ struct City_cinema
             if (lst_cinema[i].film_name == name_film)   std::cout << lst_cinema[i].cinema_name << '\n';
         }
     }
+    //support method, show all cinema in table
     void show_all(){
         for (int i = 0; i < this->current_len; ++i){
             lst_cinema[i].show_info();
         }
     }
-
+    //support method for input from file
     void input_from_file(std::string file_name){
         std::ifstream fin(file_name);
         std::string cinema_name, film_name;
@@ -268,7 +269,6 @@ struct City_cinema_vector
         c.date_film = d;
         auto it = cinema_city.end() - 1;
         for (int i = cinema_city.size() - 1; it!=cinema_city.begin() - 1;--i, --it){
-            std::cout << cinema_city[i].date_film << '\n';
             if (cinema_city[i].date_film == d){
                 cinema_city.erase(it);
             }
